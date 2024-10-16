@@ -28,7 +28,7 @@ int main(void) {
             else if(input[j] == '-'){
                 if(t != L.begin()){
                     t--;
-                    t = L.erase(t);
+                    t = L.erase(t); // t에 새로운 주소를 반환하지 않고 erase만 수행하면 출력 오류 발생
                 }
             }
             else {
