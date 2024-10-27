@@ -1,43 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-stack<int> input_s;
-stack<int> output_s;
-
 int main(void) {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     
-    int N = 0;
-    int num = 0;
-    vector<int> nge;
-
-    // 입력
+    int N;
     cin >> N;
-    for(int i=0; i<N; i++){
-        cin >> num;
-        input_s.push(num);
-    } 
+    vector<int> arr(N), nge(N, -1);
+    stack<int> s;
 
-    while(!input_s.empty()){
-
-        while(!output_s.empty() && output_s.top() <= input_s.top()){
-            output_s.pop();
-        }
-
-        if(output_s.empty()){
-                nge.push_back(-1);
-        }
-        else {
-            nge.push_back(output_s.top());
-        }
-        output_s.push(input_s.top());
-        input_s.pop();
+    for(int i = 0; i < N; i++) {
+        cin >> arr[i];
     }
 
-    for(int i=nge.size(); i>0 ; i--){
-        cout << nge[i-1] << " ";
+    // 배열의 끝에서부터 역순으로 순회
+    for(int i = N - 1; i >= 0; i--) {
+        // 스택이 비어 있지 않으면서 현재 원소보다 작거나 같은 값은 pop
+        while(!s.empty() && s.top() <= arr[i]) {
+            s.pop();
+        }
+        
+        // 스택이 비어있지 않으면 top이 다음 큰 수
+        if(!s.empty()) {
+            nge[i] = s.top();
+        }
+        
+        // 현재 원소를 스택에 push
+        s.push(arr[i]);
     }
 
+    for(int i = 0; i < N; i++) {
+        cout << nge[i] << " ";
+    }
+    
     return 0;
 }
